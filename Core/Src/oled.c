@@ -201,3 +201,44 @@ void OLED_ShowString(uint8_t Row, uint8_t Col, char *Data)
 		OLED_ShowChar(Row, Col + i, Data[i]);
 	}
 }
+
+int8_t _OLED_GetLength(int8_t Data)
+{
+	int8_t len = 0;
+	while (Data > 0)
+	{
+		len ++;
+		Data /= 10;
+	}
+	return len;
+}
+
+uint32_t _OLED_Pow(uint32_t X, uint32_t Y)
+{
+	uint32_t Result = 1;
+	while (Y--)
+	{
+		Result *= X;
+	}
+	return Result;
+}
+
+void OLED_ShowNum(uint8_t Row, uint8_t Col, int32_t Data, uint8_t Size)
+{
+	uint8_t i;
+	uint32_t Number;
+	if (Data >= 0)
+	{
+		OLED_ShowChar(Row, Col, '+');
+		Number = Data;
+	}
+	else
+	{
+		OLED_ShowChar(Row, Col, '-');
+		Number = -Data;
+	}
+	for (i = 0; i < Size; i++)							
+	{
+		OLED_ShowChar(Row, Col + i + 1, Number / _OLED_Pow(10, Size - i - 1) % 10 + '0');
+	}
+}

@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include <stdlib.h>
 
 #include "stm32f1xx_hal.h"
 #include "main.h"
@@ -22,6 +23,8 @@ void OLED_Clear();
 void OLED_ShowChar(uint8_t Row, uint8_t Col, char Data);
 
 void OLED_ShowString(uint8_t Row, uint8_t Col, char *Data);
+
+void OLED_ShowNum(uint8_t Row, uint8_t Col, int32_t Data, uint8_t Size);
 
 #ifdef __cplusplus
 }

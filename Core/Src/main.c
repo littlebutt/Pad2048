@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "oled.h"
+#include "gyro.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -91,13 +92,25 @@ int main(void)
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
   OLED_Init();
-  OLED_ShowString(1, 1, "Hello World");
+  // I2C_HandleTypeDef hi2c2;
+  int16_t AccX, AccY, AccZ, GyroX, GyroY, GyroZ;
+  Gyro_Init(&hi2c2);
+  OLED_ShowString(1, 1, "AX      GX");
+  OLED_ShowString(2, 1, "AY      GY");
+  OLED_ShowString(3, 1, "AZ      GZ");
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    Gyro_GetData(&hi2c2, &AccX, &AccY, &AccZ, &GyroX, &GyroY, &GyroZ);
+    OLED_ShowNum(1, 3, AccX, 5);
+    OLED_ShowNum(1, 11, GyroX, 5);
+    OLED_ShowNum(2, 3, AccY, 5);
+    OLED_ShowNum(2, 11, GyroY, 5);
+    OLED_ShowNum(3, 3, AccZ, 5);
+    OLED_ShowNum(3, 11, GyroZ, 5);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
