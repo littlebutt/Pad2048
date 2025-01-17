@@ -111,6 +111,25 @@ int main(void)
     OLED_ShowNum(2, 11, GyroY, 5);
     OLED_ShowNum(3, 3, AccZ, 5);
     OLED_ShowNum(3, 11, GyroZ, 5);
+    int dir = Gyro_GetDir(&hi2c2);
+    if (dir == LEFT)
+    {
+      OLED_ShowChar(4, 1, 'L');
+    }
+    else if (dir == RIGHT)
+    {
+      OLED_ShowChar(4, 1, 'R');
+    }
+    else if (dir == UP)
+    {
+      OLED_ShowChar(4, 1, 'U');
+    }
+    else if (dir == DOWN)
+    {
+      OLED_ShowChar(4, 1, 'D');
+    }
+    
+    
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

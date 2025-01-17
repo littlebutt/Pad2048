@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 #include <stdint.h>
+#include <stdlib.h>
 
 #include "stm32f1xx_hal.h"
 #include "main.h"
@@ -33,11 +34,20 @@ extern "C" {
 #define	PWR_MGMT_2	    0x6C
 #define	WHO_AM_I	    0x75
 
+enum {
+    LEFT = 1,
+    UP,
+    RIGHT,
+    DOWN
+};
+
 void Gyro_Init(I2C_HandleTypeDef *hi2c2);
 
 void Gyro_GetData(I2C_HandleTypeDef *hi2c2,
                 int16_t *AccX, int16_t *AccY, int16_t *AccZ,
 				int16_t *GyroX, int16_t *GyroY, int16_t *GyroZ);
+
+int Gyro_GetDir(I2C_HandleTypeDef *hi2c2);
 
 #ifdef __cplusplus
 }

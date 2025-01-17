@@ -56,3 +56,32 @@ void Gyro_GetData(I2C_HandleTypeDef *hi2c2,
 	DataL = _Gyro_ReadReg(hi2c2, GYRO_ZOUT_L);
 	*GyroZ = (DataH << 8) | DataL;
 }
+
+int Gyro_GetDir(I2C_HandleTypeDef *hi2c2)
+{
+	int16_t AccX, AccY, AccZ, GyroX, GyroY, GyroZ;
+	while (1)
+	{
+		Gyro_GetData(hi2c2, &AccX, &AccY, &AccZ, &GyroX, &GyroY, &GyroZ);
+		if (AccY > 800)
+		{
+			HAL_Delay(800);
+			return LEFT;
+		}
+		else if (AccY < -800)
+		{
+			HAL_Delay(800);
+			return RIGHT;
+		}
+		else if (AccX > 800)
+		{
+			HAL_Delay(800);
+			return UP;
+		}
+		else if (AccX < -800)
+		{
+			HAL_Delay(800);
+			return DOWN;
+		}
+	}
+}
