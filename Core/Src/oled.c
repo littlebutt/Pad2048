@@ -225,20 +225,22 @@ uint32_t _OLED_Pow(uint32_t X, uint32_t Y)
 
 void OLED_ShowNum(uint8_t Row, uint8_t Col, int32_t Data, uint8_t Size)
 {
-	uint8_t i;
-	uint32_t Number;
-	if (Data >= 0)
+	int8_t Sign = Data >= 0 ? 1 : -1;
+	uint32_t Number = Data * Sign;
+	if (Sign >= 0)
 	{
-		OLED_ShowChar(Row, Col, '+');
-		Number = Data;
+		for (int i = 0; i < Size; i++)							
+		{
+			OLED_ShowChar(Row, Col + i, Number / _OLED_Pow(10, Size - i - 1) % 10 + '0');
+		}
 	}
 	else
 	{
 		OLED_ShowChar(Row, Col, '-');
-		Number = -Data;
+		for (int i = 0; i < Size; i++)							
+		{
+			OLED_ShowChar(Row, Col + i + 1, Number / _OLED_Pow(10, Size - i - 1) % 10 + '0');
+		}
 	}
-	for (i = 0; i < Size; i++)							
-	{
-		OLED_ShowChar(Row, Col + i + 1, Number / _OLED_Pow(10, Size - i - 1) % 10 + '0');
-	}
+	
 }

@@ -1,5 +1,6 @@
 #include "gyro.h"
 
+int LastStatus = 0;
 
 void _Gyro_WriteReg(I2C_HandleTypeDef *hi2c2, uint8_t Addr, uint8_t Data);
 
@@ -63,25 +64,37 @@ int Gyro_GetDir(I2C_HandleTypeDef *hi2c2)
 	while (1)
 	{
 		Gyro_GetData(hi2c2, &AccX, &AccY, &AccZ, &GyroX, &GyroY, &GyroZ);
-		if (AccY > 800)
+		if (AccY > 800 && GyroY > 300)
 		{
-			HAL_Delay(800);
-			return LEFT;
+			if (LastStatus != LEFT)
+			{
+				LastStatus = LEFT;
+				return LEFT;
+			}
 		}
-		else if (AccY < -800)
+		else if (AccY < -800 && GyroY < 300)
 		{
-			HAL_Delay(800);
-			return RIGHT;
+			if (LastStatus != RIGHT)
+			{
+				LastStatus = RIGHT;
+				return RIGHT;
+			}
 		}
-		else if (AccX > 800)
+		else if (AccX > 800 && GyroX > 300)
 		{
-			HAL_Delay(800);
-			return UP;
+			if (LastStatus != UP)
+			{
+				LastStatus = UP;
+				return UP;
+			}
 		}
-		else if (AccX < -800)
+		else if (AccX < -800 && GyroX < 300)
 		{
-			HAL_Delay(800);
-			return DOWN;
+			if (LastStatus != DOWN)
+			{
+				LastStatus = DOWN;
+				return DOWN;
+			}
 		}
 	}
 }
