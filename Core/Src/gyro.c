@@ -2,6 +2,9 @@
 
 int LastStatus = 0;
 
+extern volatile uint32_t G_TICK;
+uint32_t Tick = 0;
+
 void _Gyro_WriteReg(I2C_HandleTypeDef *hi2c2, uint8_t Addr, uint8_t Data);
 
 uint8_t _Gyro_ReadReg(I2C_HandleTypeDef *hi2c2, uint8_t Addr);
@@ -66,33 +69,37 @@ int Gyro_GetDir(I2C_HandleTypeDef *hi2c2)
 		Gyro_GetData(hi2c2, &AccX, &AccY, &AccZ, &GyroX, &GyroY, &GyroZ);
 		if (AccY > 800 && GyroY > 300)
 		{
-			if (LastStatus != LEFT)
+			if (Tick != G_TICK)
 			{
 				LastStatus = LEFT;
+				Tick = G_TICK;
 				return LEFT;
 			}
 		}
 		else if (AccY < -800 && GyroY < 300)
 		{
-			if (LastStatus != RIGHT)
+			if (Tick != G_TICK)
 			{
 				LastStatus = RIGHT;
+				Tick = G_TICK;
 				return RIGHT;
 			}
 		}
 		else if (AccX > 800 && GyroX > 300)
 		{
-			if (LastStatus != UP)
+			if (Tick != G_TICK)
 			{
 				LastStatus = UP;
+				Tick = G_TICK;
 				return UP;
 			}
 		}
 		else if (AccX < -800 && GyroX < 300)
 		{
-			if (LastStatus != DOWN)
+			if (Tick != G_TICK)
 			{
 				LastStatus = DOWN;
+				Tick = G_TICK;
 				return DOWN;
 			}
 		}
