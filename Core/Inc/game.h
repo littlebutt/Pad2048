@@ -14,6 +14,7 @@ typedef struct
     int Board[4][4];
     int Score;
     int CurrentSpace;
+    int Steps;
 } Game_Ctx;
 
 void Game_Init(Game_Ctx *Ctx);

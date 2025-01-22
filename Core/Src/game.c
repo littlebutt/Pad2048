@@ -4,6 +4,7 @@ void Game_Init(Game_Ctx *Ctx)
 {
     memset(Ctx->Board, 0, sizeof(Ctx->Board));
     Ctx->Score = 0;
+    Ctx->Steps = 0;
     Ctx->CurrentSpace = 16;
     srand(65535);
 }
@@ -74,6 +75,7 @@ void _Game_DoMove(Game_Ctx *Ctx, int arr[4])
         } else if (arr[i] == arr[j]) {
             arr[j] += arr[i];
             Ctx->CurrentSpace ++;
+            Ctx->Score += arr[i];
             arr[i] = 0;
             i++;
             j++;
@@ -90,6 +92,7 @@ void _Game_DoMove(Game_Ctx *Ctx, int arr[4])
 void Game_Move(Game_Ctx *Ctx, int Dir)
 {
     int strap[4][4];
+    Ctx->Steps ++;
     if (Dir == LEFT)
     {
         for (int i = 0; i < 4; i++)
@@ -195,4 +198,8 @@ void Game_Display(Game_Ctx *Ctx)
     {
         OLED_ShowChar(i + 1, 9, '|');
     }
+    OLED_ShowString(1, 10, "Score:");
+    OLED_ShowNum(2, 13, Ctx->Score, 3);
+    OLED_ShowString(3, 10, "Steps:");
+    OLED_ShowNum(4, 13, Ctx->Steps, 3);
 }
