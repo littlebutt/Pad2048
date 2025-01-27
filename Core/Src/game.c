@@ -191,7 +191,7 @@ void Game_Display(Game_Ctx *Ctx)
             {
                 continue;
             }
-            OLED_ShowNum(i + 1, 2 * j + 1, Ctx->Board[i][j], Ctx->Board[i][j] > 9 ? 2 : 1);
+            OLED_ShowGameNum(i + 1, j + 1, Ctx->Board[i][j]);
         }
     }
     for (int i = 0; i < 4; i++)

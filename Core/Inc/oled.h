@@ -26,6 +26,8 @@ void OLED_ShowString(uint8_t Row, uint8_t Col, char *Data);
 
 void OLED_ShowNum(uint8_t Row, uint8_t Col, int32_t Data, uint8_t Size);
 
+void OLED_ShowGameNum(uint8_t Row, uint8_t Col, int16_t Data);
+
 #ifdef __cplusplus
 }
 #endif

@@ -187,6 +187,78 @@ void OLED_ShowChar(uint8_t Row, uint8_t Col, char Data)
 	}
 }
 
+void _OLED_ShowChar(uint8_t Row, uint8_t Col, uint8_t Data)
+{
+	uint8_t i;
+	OLED_SetCursor((Row - 1) * 2, (Col - 1) * 2 * 8);
+	for (i = 0; i < 8; i++)
+	{
+		_OLED_WriteData(OLED_F16x16[Data][i]);
+	}
+	OLED_SetCursor((Row - 1) * 2, (Col - 1) * 2 * 8 + 8);
+	for (i = 0; i < 8; i++)
+	{
+		_OLED_WriteData(OLED_F16x16[Data][i + 8]);
+	}
+	OLED_SetCursor((Row - 1) * 2 + 1, (Col - 1) * 2 * 8);
+	for (i = 0; i < 8; i++)
+	{
+		_OLED_WriteData(OLED_F16x16[Data][i + 16]);
+	}
+	OLED_SetCursor((Row - 1) * 2 + 1, (Col - 1) * 2 * 8 + 8);
+	for (i = 0; i < 8; i++)
+	{
+		_OLED_WriteData(OLED_F16x16[Data][i + 24]);
+	}
+}
+
+void OLED_ShowGameNum(uint8_t Row, uint8_t Col, int16_t Data)
+{
+	if (Data == 2) {
+		_OLED_ShowChar(Row, Col, 0);
+	}
+	else if (Data == 4)
+	{
+		_OLED_ShowChar(Row, Col, 1);
+	}
+	else if (Data == 8)
+	{
+		_OLED_ShowChar(Row, Col, 2);
+	}
+	else if (Data == 16)
+	{
+		_OLED_ShowChar(Row, Col, 3);
+	}
+	else if (Data == 32)
+	{
+		_OLED_ShowChar(Row, Col, 4);
+	}
+	else if (Data == 64)
+	{
+		_OLED_ShowChar(Row, Col, 5);
+	}
+	else if (Data == 128)
+	{
+		_OLED_ShowChar(Row, Col, 6);
+	}
+	else if (Data == 256)
+	{
+		_OLED_ShowChar(Row, Col, 7);
+	}
+	else if (Data == 512)
+	{
+		_OLED_ShowChar(Row, Col, 8);
+	}
+	else if (Data == 1024)
+	{
+		_OLED_ShowChar(Row, Col, 9);
+	}
+	else if (Data == 2048)
+	{
+		_OLED_ShowChar(Row, Col, 10);
+	}
+}
+
 /**
  * @brief Print a string with a given coord
  * @param Row The row position (1-4)
