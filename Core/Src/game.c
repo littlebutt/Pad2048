@@ -1,12 +1,22 @@
 #include "game.h"
 
+uint32_t _GetSeed() {
+    uint32_t seed;
+    volatile uint8_t *ram = (uint8_t *)&seed;
+    for (int i = 0; i < 4; i++)
+    {
+        ram[i] = *(volatile uint8_t*)(0x20000000 + i);
+    }
+    return seed;
+}
+
 void Game_Init(Game_Ctx *Ctx)
 {
     memset(Ctx->Board, 0, sizeof(Ctx->Board));
     Ctx->Score = 0;
     Ctx->Steps = 0;
     Ctx->CurrentSpace = 16;
-    srand(65535);
+    srand(_GetSeed());
 }
 
 int _Game_GetNum(Game_Ctx *Ctx)
